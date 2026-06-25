@@ -7,19 +7,24 @@ from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from pydantic import EmailStr
 from sqlalchemy.ext.asyncio import AsyncSession
-import redis
 import jsonpickle
 import random
 import string
 import sys
 
 from src.database.db import get_db
-from src.conf.config import settings
 from src.services.users import UserService
 from src.database.models import User, UserRole
 
-r = redis.Redis(host="localhost", port=6379, db=0)
+from src.conf.config import settings
+import redis
 
+r = redis.Redis(
+    host=settings.REDIS_HOST,
+    port=settings.REDIS_PORT,
+    db=0,
+    decode_responses=True,
+)
 credentials_exception = HTTPException(
     status_code=status.HTTP_401_UNAUTHORIZED,
     detail="Could not validate credentials",

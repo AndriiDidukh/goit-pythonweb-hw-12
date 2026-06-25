@@ -4,10 +4,14 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     DB_URL: str
+    SYNC_DB_URL: str
     JWT_SECRET: str
     JWT_ALGORITHM: str = "HS256"
     JWT_EXPIRATION_SECONDS: int = 3600
     REFRESH_TOKEN_EXPIRATION_SECONDS: int = 7 * 24 * 60 * 60
+
+    REDIS_HOST: str
+    REDIS_PORT: int
 
     MAIL_USERNAME: EmailStr
     MAIL_PASSWORD: str
